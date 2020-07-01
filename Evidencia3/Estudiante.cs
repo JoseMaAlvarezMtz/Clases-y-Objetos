@@ -8,11 +8,11 @@ namespace Evidencia3
 {
     class Estudiante
     {
-        private int matricula;
-        private string nombre;
-        private int edad;
-        private string password;
-        private double CoutaEscolar;
+        protected int matricula;
+        protected string nombre;
+        protected int edad;
+        protected string password;
+        protected double CoutaEscolar;
 
         public Estudiante()
         {
