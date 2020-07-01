@@ -12,6 +12,7 @@ namespace Evidencia3
         private string nombre;
         private int edad;
         private string password;
+        private double CoutaEscolar;
 
         public Estudiante()
         {
