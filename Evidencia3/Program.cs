@@ -10,15 +10,9 @@ namespace Evidencia3
     {
         static void Main(string[] args)
         {
-            bool prueba = false;
             int n = 0;
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("Ingresa la cantidad de alumnos a capturar:");
-                prueba = int.TryParse(Console.ReadLine(), out n);
-            } while (!prueba);
-
+            Console.WriteLine("Ingresa la cantidad de alumnos a capturar:");
+            n = ComprobarNumero();
             Estudiante[] arreglo = new Estudiante[n];
             int matricula = 0;
             string nombre="";
@@ -135,9 +129,12 @@ namespace Evidencia3
                 {
                     Numero = int.Parse(numero);
                     salida = true;
-                }catch(Exception Ex)
+                }catch(Exception Ex )
                 {
-                    Console.WriteLine("No se ingreso un dato numerico. Favor de volver a ingresar un dato numerico.\n\n"+Ex);
+                    Console.WriteLine(Ex.Message);
+                }
+                finally
+                {
                     Console.WriteLine("\nIngresa un dato numerico: ");
                 }
             } while (!salida);
