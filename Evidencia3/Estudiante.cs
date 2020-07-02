@@ -12,7 +12,7 @@ namespace Evidencia3
         protected string nombre;
         protected int edad;
         protected string password;
-        protected double CoutaEscolar;
+        protected double CuotaEscolar;
 
         public Estudiante()
         {
@@ -20,7 +20,7 @@ namespace Evidencia3
             nombre = "Jose Alvarez";
             edad = 22;
             password = Password.GenerarPassword();
-            CoutaEscolar = 2500;
+            CuotaEscolar = 2000;
         }
 
         public Estudiante(int matricula, string nombre, int edad, double CoutaEscolar)
@@ -29,7 +29,7 @@ namespace Evidencia3
             this.nombre = nombre;
             this.edad = AsignarEdad(edad);
             password = Password.GenerarPassword();
-            this.CoutaEscolar = CoutaEscolar;
+            this.CuotaEscolar = CoutaEscolar;
         }
 
         public int AsignarEdad(int E)
@@ -48,12 +48,22 @@ namespace Evidencia3
 
         public virtual string MostrarDatos( )
         {
-            string mensaje = "Nombre del estudiante: " + this.nombre + "\n Edad: " + this.edad + "\n Matricula: " + this.matricula + "\n Password: " + this.password+"\n Cuota: "+this.CoutaEscolar;
+            string mensaje = "Nombre del estudiante: " + this.nombre + "\n Edad: " + this.edad + "\n Matricula: " + this.matricula + "\n Password: " + this.password+"\n Cuota: "+this.CuotaEscolar;
             return mensaje;
         }
         public virtual void AsignarBeca(int porcentaje)
         {
-
+            double descuento;
+            descuento = (double)porcentaje / 100;
+            //Console.WriteLine(descuento);
+            descuento = CuotaEscolar * descuento;
+            //Console.WriteLine(descuento);
+            this.CuotaEscolar = CuotaEscolar - descuento;
+            //Console.WriteLine(CuotaEscolar);
+            //Console.ReadLine();
         }
+       
     }
+
+
 }
