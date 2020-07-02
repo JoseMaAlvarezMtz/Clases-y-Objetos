@@ -27,17 +27,18 @@ namespace Evidencia3
             string op;
             bool validar = false;
             bool Servicio = false;
+            int porcentaje;
             for (int i =0; i<n; i++)
             {
                 Console.Clear();
                 Console.WriteLine("Ingresa la matricula del estudiante #" + (i + 1) + ": ");
-                matricula = ComprobarNumero(Console.ReadLine());
+                matricula = ComprobarNumero();
                 Console.WriteLine("Ingresa el nombre del estudiante #" + (i + 1) + ": ");
                 nombre = Console.ReadLine();
                 Console.WriteLine("Ingresa la edad del estudiante #" + (i + 1) + ": ");
-                edad = ComprobarNumero(Console.ReadLine());
+                edad = ComprobarNumero();
                 Console.WriteLine("Ingresa la cuota escolar del estudiante #" + (i + 1) + ": ");
-                CuotaEscolar = double.Parse(Console.ReadLine());
+                CuotaEscolar = (double)(ComprobarNumero());
                 do
                 {
                     Console.WriteLine("El estudiante esta cursando licenciatura(l) o Posgrado(p).\n Ingresa L para Licenciatura.\n Ingresa P para Posgrado. \n Ingresa (N) si esta opcion no aplica.");
@@ -70,7 +71,7 @@ namespace Evidencia3
                             arreglo[i] = new EstudiantePosgrado();
                             int SNI;
                             Console.WriteLine("Ingresa nivel de SNI:");
-                            SNI = ComprobarNumero(Console.ReadLine());
+                            SNI = ComprobarNumero();
                             arreglo[i] = new EstudiantePosgrado(matricula, nombre, edad, CuotaEscolar, SNI);
                             validar = true;
                             break;
@@ -83,69 +84,89 @@ namespace Evidencia3
                             validar = false;
                             break;
                     }
-                } while (!validar);    
-
-                
-                /*if (Console.ReadLine() == "si")
+                } while (!validar);
+                validar = false;
+                string letra;
+                do
                 {
-                    arreglo[i] = new EstudianteLicenciatura();
-                    Console.WriteLine("Servicio:");
-                    if (Console.ReadLine() == "s")
+                    Console.WriteLine("¿El alumno cuenta con beca?");
+                    Console.WriteLine("Si (s)\nNo (n)");
+                    letra = Console.ReadLine();
+                    if (letra == "s" || letra == "S")
                     {
-                        arreglo[i] = new EstudianteLicenciatura(matricula, nombre, edad, CuotaEscolar, Servicio);
+                        Console.WriteLine("Ingresa el porcentaje de la beca como numero entero:");
+                        porcentaje = ComprobarNumero();
+                        arreglo[i].AsignarBeca(porcentaje);
+                        validar = true;
                     }
-                   
-                }*/
-                //arreglo[i] = new  Estudiante(matricula,nombre,edad,CuotaEscolar);
-
+                    else if (letra == "n" || letra == "N")
+                    {
+                        validar = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Opcion no valida vuelve a intentarlo.");
+                    }
+                    
+                } while (!validar);
+                
             }
             Console.Clear();
-            Console.WriteLine("Datos de los alumnos: ");
+            Console.WriteLine("Datos de los alumnos: \n");
             string mensaje;
   
             for(int i = 0; i < n; i++)
             {
                 mensaje = arreglo[i].MostrarDatos();
-                Console.WriteLine(mensaje);
-                Console.WriteLine("");
+                Console.WriteLine(mensaje+"\n");
             }
             Console.ReadLine();
         }
 
-        public static int ComprobarNumero(string numero)
+        public static int ComprobarNumero()
         {
+            string numero;
             int Numero=0;
             bool salida = false;
-            try
+            do
             {
-                 Numero = int.Parse(numero);
-            }catch(Exception Ex)
-            {
-                do
+                numero = Console.ReadLine();
+                try
                 {
-                    Console.WriteLine("No se ingreso un dato numerico. Favor de volver a ingresar un dato numerico.");
-                    Console.ReadLine();
-                    //Console.Clear();
-                    Console.WriteLine("Ingresa un dato numerico: ");
-                    salida = int.TryParse(Console.ReadLine(), out Numero);
-                } while (!salida);
-            }
-            
+                    Numero = int.Parse(numero);
+                    salida = true;
+                }catch(Exception Ex)
+                {
+                    Console.WriteLine("No se ingreso un dato numerico. Favor de volver a ingresar un dato numerico.\n\n"+Ex);
+                    Console.WriteLine("\nIngresa un dato numerico: ");
+                }
+            } while (!salida);
             return Numero;
         }
 
         public static bool Licenciatura()
         {
             bool valor = false;
-            Console.WriteLine("¿Tiene Servicio? Si (s) No (n): ");
-            if (Console.ReadLine() == "s")
+            string letra;
+            do
             {
-                valor = true;
-            }
-            else
-            {
-                valor = false;
-            }
+                Console.WriteLine("¿Tiene Servicio? Si (s) No (n): ");
+                letra = Console.ReadLine();
+                if (letra == "s" || letra == "S")
+                {
+                    valor = true;
+                }
+                else if (letra == "n" || letra == "N")
+                {
+                    valor = false;
+                }
+                else
+                {   
+                   Console.WriteLine("No se ingreso una opcion valida favor de volver a intentarlo.");
+                }
+                
+            } while (!valor);
+            
             return valor;
         }
     }
