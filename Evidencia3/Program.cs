@@ -24,30 +24,78 @@ namespace Evidencia3
             string nombre="";
             int edad= 0;
             double CuotaEscolar = 0.0;
-            for(int i =0; i<n; i++)
+            string op;
+            bool validar = false;
+            bool Servicio = false;
+            for (int i =0; i<n; i++)
             {
                 Console.Clear();
                 Console.WriteLine("Ingresa la matricula del estudiante #" + (i + 1) + ": ");
-                matricula = int.Parse(Console.ReadLine());
+                matricula = ComprobarNumero(Console.ReadLine());
                 Console.WriteLine("Ingresa el nombre del estudiante #" + (i + 1) + ": ");
                 nombre = Console.ReadLine();
                 Console.WriteLine("Ingresa la edad del estudiante #" + (i + 1) + ": ");
-                edad = int.Parse(Console.ReadLine());
+                edad = ComprobarNumero(Console.ReadLine());
                 Console.WriteLine("Ingresa la cuota escolar del estudiante #" + (i + 1) + ": ");
                 CuotaEscolar = double.Parse(Console.ReadLine());
-                //Ejemplo de cambio de constructor a constructor heredado
-                Console.WriteLine("El estudiante esta cursando licenciatura:");
-                if (Console.ReadLine() == "si")
+                do
+                {
+                    Console.WriteLine("El estudiante esta cursando licenciatura(l) o Posgrado(p).\n Ingresa L para Licenciatura.\n Ingresa P para Posgrado. \n Ingresa (N) si esta opcion no aplica.");
+                    op = Console.ReadLine();
+                    if (op == "l" || op == "L")
+                    {
+                        op = "l";
+                    }
+                    if (op == "p" || op == "P")
+                    {
+                        op = "p";
+                    }
+                    if (op == "n" || op == "N")
+                    {
+                        op = "n";
+                    }
+                    switch (op)
+                    {
+                        case "l":
+                            arreglo[i] = new EstudianteLicenciatura();
+                            Servicio = Licenciatura();
+                            if (Servicio)
+                            {
+                                arreglo[i] = new EstudianteLicenciatura(matricula, nombre, edad, CuotaEscolar, Servicio);
+                            }
+                            validar = true;
+                            break;
+
+                        case "p":
+                            arreglo[i] = new EstudiantePosgrado();
+                            int SNI;
+                            Console.WriteLine("Ingresa nivel de SNI:");
+                            SNI = ComprobarNumero(Console.ReadLine());
+                            arreglo[i] = new EstudiantePosgrado(matricula, nombre, edad, CuotaEscolar, SNI);
+                            validar = true;
+                            break;
+
+                        case "n":
+                            validar = true;
+                            break;
+                        default:
+                            Console.WriteLine("Opcion no valida.");
+                            validar = false;
+                            break;
+                    }
+                } while (!validar);    
+
+                
+                /*if (Console.ReadLine() == "si")
                 {
                     arreglo[i] = new EstudianteLicenciatura();
                     Console.WriteLine("Servicio:");
                     if (Console.ReadLine() == "s")
                     {
-                        bool Servicio = true;
                         arreglo[i] = new EstudianteLicenciatura(matricula, nombre, edad, CuotaEscolar, Servicio);
                     }
                    
-                }
+                }*/
                 //arreglo[i] = new  Estudiante(matricula,nombre,edad,CuotaEscolar);
 
             }
@@ -62,6 +110,43 @@ namespace Evidencia3
                 Console.WriteLine("");
             }
             Console.ReadLine();
+        }
+
+        public static int ComprobarNumero(string numero)
+        {
+            int Numero=0;
+            bool salida = false;
+            try
+            {
+                 Numero = int.Parse(numero);
+            }catch(Exception Ex)
+            {
+                do
+                {
+                    Console.WriteLine("No se ingreso un dato numerico. Favor de volver a ingresar un dato numerico.");
+                    Console.ReadLine();
+                    //Console.Clear();
+                    Console.WriteLine("Ingresa un dato numerico: ");
+                    salida = int.TryParse(Console.ReadLine(), out Numero);
+                } while (!salida);
+            }
+            
+            return Numero;
+        }
+
+        public static bool Licenciatura()
+        {
+            bool valor = false;
+            Console.WriteLine("¿Tiene Servicio? Si (s) No (n): ");
+            if (Console.ReadLine() == "s")
+            {
+                valor = true;
+            }
+            else
+            {
+                valor = false;
+            }
+            return valor;
         }
     }
 }
