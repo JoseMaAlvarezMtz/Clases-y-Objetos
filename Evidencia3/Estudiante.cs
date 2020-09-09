@@ -8,10 +8,11 @@ namespace Evidencia3
 {
     class Estudiante
     {
-        private int matricula;
-        private string nombre;
-        private int edad;
-        private string password;
+        protected int matricula;
+        protected string nombre;
+        protected int edad;
+        protected string password;
+        protected double CuotaEscolar;
 
         public Estudiante()
         {
@@ -19,14 +20,16 @@ namespace Evidencia3
             nombre = "Jose Alvarez";
             edad = 22;
             password = Password.GenerarPassword();
+            CuotaEscolar = 2000;
         }
 
-        public Estudiante(int matricula, string nombre, int edad)
+        public Estudiante(int matricula, string nombre, int edad, double CoutaEscolar)
         {
             this.matricula = matricula;
             this.nombre = nombre;
             this.edad = AsignarEdad(edad);
             password = Password.GenerarPassword();
+            this.CuotaEscolar = CoutaEscolar;
         }
 
         public int AsignarEdad(int E)
@@ -43,10 +46,24 @@ namespace Evidencia3
             return E;
         }
 
-        public string MostrarDatos( )
+        public virtual string MostrarDatos( )
         {
-            string mensaje = "Nombre del estudiante: " + this.nombre + "\n Edad: " + this.edad + "\n Matricula: " + this.matricula + "\n Password: " + this.password;
+            string mensaje = "Nombre del estudiante: " + this.nombre + "\n Edad: " + this.edad + "\n Matricula: " + this.matricula + "\n Password: " + this.password+"\n Cuota: "+this.CuotaEscolar;
             return mensaje;
         }
+        public virtual void AsignarBeca(int porcentaje)
+        {
+            double descuento;
+            descuento = (double)porcentaje / 100;
+            //Console.WriteLine(descuento);
+            descuento = CuotaEscolar * descuento;
+            //Console.WriteLine(descuento);
+            this.CuotaEscolar = CuotaEscolar - descuento;
+            //Console.WriteLine(CuotaEscolar);
+            //Console.ReadLine();
+        }
+       
     }
+
+
 }
